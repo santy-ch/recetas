@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h2 class="text-center mb-5"> Crear Nueva Receta</h2>
+    <h2 class="text-center mb-5"> Crear Nueva Receta:</h2>
         <div class="row justify-content-center mt-5">
             <div class="col-md-8">
                 <form method="POST" action="{{route('recetas.store')}}" enctype="multipart/form-data" novalidate>
