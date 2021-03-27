@@ -127,7 +127,7 @@ class RecetaController extends Controller
      */
     public function update(Request $request, Receta $receta)
     {
-        
+        $this->authorize('update', $receta);
         $data=$request->validate([
             'nombre'=>'required|min:6',
             'categoria'=>'required',
@@ -141,6 +141,12 @@ class RecetaController extends Controller
         $receta->ingredientes=$data['ingredientes'];
         $receta->preparacion=$data['preparaacion'];
         $receta->categoria_id=$data['categoria'];
+
+        //nueva imagen
+        $rutaImagen=$request['imagen']->store('upload-recetas','public');
+        $rutaImagen->save();
+            $receta->imagen=$rutaImagen;
+
         $receta->save();
         return redirect()->action('RecetaController@index');
 
@@ -154,6 +160,11 @@ class RecetaController extends Controller
      */
     public function destroy(Receta $receta)
     {
-        //
+        $this->authorize('delete', $receta);
+
+        // metodo para eliminar
+        $receta->delete();
+
+        return redirect()->action('RecetaController@index');
     }
 }

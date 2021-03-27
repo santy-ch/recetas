@@ -42,4 +42,21 @@ class User extends Authenticatable
         return $this->hasMany(Receta::class);
     }
 
+    //evento cuando se cree un usuario->perfil
+
+    protected static function booted(){
+        parent::booted();
+
+        static::created(function($user){
+            $user->userPerfil()->create();
+
+        });
+
+    }
+
+    //relacion 1:1
+    public function userPerfil(){
+        return $this->hasOne(Perfil::class);
+    }
+
 }
